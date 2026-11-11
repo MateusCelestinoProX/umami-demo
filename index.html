@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Umami Analytics — Portfolio Demo Edition. Privacy-first, real-time analytics suite com interface Liquid Glass e 34 WebGL GPU Shaders.">
+  <meta name="theme-color" content="#040407">
+  <title>Umami Analytics // Portfolio Demo Edition</title>
+
+  <!-- Google Fonts: Inter, Outfit, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css?v=20261110">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+</head>
+<body>
+
+  <!-- =========================================================
+       1. CINEMATIC SPLASH & BOOT EXPERIENCE
+       ========================================================= -->
+  <div id="demo-splash-screen" class="demo-splash-overlay">
+    <div class="demo-splash-content">
+      <div class="demo-splash-glow"></div>
+      
+      <div class="demo-splash-badge">
+        <span class="demo-pulse-dot"></span>
+        <span>PORTFOLIO DEMO EXPERIENCE · ENTERPRISE ANALYTICS</span>
+      </div>
+
+      <div class="demo-splash-icon-wrap">
+        <svg class="demo-splash-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20V10"></path>
+          <path d="M18 20V4"></path>
+          <path d="M6 20v-4"></path>
+        </svg>
+      </div>
+
+      <h1 class="demo-splash-title">UMAMI <span class="demo-splash-highlight">// ANALYTICS</span></h1>
+      <p class="demo-splash-subtitle">Privacy-Focused Web Analytics, Real-Time Stream Engine & Liquid Glass Interface</p>
+
+      <div class="demo-boot-terminal mono" id="demo-boot-terminal">
+        <div class="boot-line active" id="boot-line-1"><span class="boot-tag">[INIT]</span> Alocando buffer de telemetria analítica e cache in-memory...</div>
+        <div class="boot-line" id="boot-line-2"><span class="boot-tag">[ENGINE]</span> Carregando 34 Shaders WebGL GPU (Liquid Glassmorphism)...</div>
+        <div class="boot-line" id="boot-line-3"><span class="boot-tag">[SYNTHESIS]</span> Gerando streams de tráfego sintético e eventos sem dados pessoais...</div>
+        <div class="boot-line" id="boot-line-4"><span class="boot-tag">[READY]</span> Pipeline de telemetria pronto. Transicionando para interface...</div>
+      </div>
+
+      <div class="demo-progress-container">
+        <div class="demo-progress-track">
+          <div class="demo-progress-fill" id="demo-progress-bar"></div>
+        </div>
+        <div class="demo-progress-labels mono">
+          <span id="demo-progress-status">INICIALIZANDO SUBSISTEMAS...</span>
+          <span id="demo-progress-pct">0%</span>
+        </div>
+      </div>
+
+      <button id="btn-enter-demo" class="demo-enter-btn mono">
+        <span>EXPLORAR DEMO INTERATIVA</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       2. BACKGROUND MOTOR: WEBGL SHADERS
+       ========================================================= -->
+  <div id="bg-container">
+    <div id="bg-webgl-container"></div>
+  </div>
+  <div id="bg-overlay"></div>
+
+  <!-- =========================================================
+       3. GLOBAL APPLICATION SHELL
+       ========================================================= -->
+  <div id="app-shell">
+
+    <!-- Top System Header -->
+    <header id="top-bar" class="glass-panel reveal-item reveal-delay-1">
+      <div class="top-left">
+        <div class="system-brand" title="Umami Analytics Dashboard">
+          <div class="brand-icon-wrap">
+            <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20V10"></path>
+              <path d="M18 20V4"></path>
+              <path d="M6 20v-4"></path>
+            </svg>
+          </div>
+          <div>
+            <span class="brand-title">Umami</span>
+            <span class="brand-badge">PORTFOLIO DEMO</span>
+          </div>
+        </div>
+
+        <!-- Website Selector Pill & Dropdown -->
+        <div class="website-selector-wrap">
+          <button class="website-pill" id="website-selector-trigger">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <span id="current-website-name">Nexus AI Cloud Platform</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="website-dropdown" id="website-dropdown">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs (Center) -->
+      <div class="top-center">
+        <nav class="view-tabs-container">
+          <button class="view-tab active" data-view="overview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Visão Geral</span>
+          </button>
+          <button class="view-tab" data-view="realtime">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+            </svg>
+            <span>Tempo Real</span>
+          </button>
+          <button class="view-tab" data-view="websites">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Websites</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Top Right Controls -->
+      <div class="top-right">
+        <!-- Live Visitor Pill -->
+        <div class="live-visitor-pill mono">
+          <span class="demo-pulse-dot"></span>
+          <span id="live-visitor-count">142 ONLINE</span>
+        </div>
+
+        <!-- 34 WebGL Shader Switcher -->
+        <div class="shader-switcher-wrap">
+          <button class="shader-btn" id="shader-switcher-btn" title="Alternar Shader WebGL GPU">
+            <span class="shader-dot"></span>
+            <span class="shader-name" id="current-shader-name">Strands</span>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="shader-dropdown" id="shader-dropdown">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Demo Mode Info Pill -->
+        <button class="demo-tag-pill" id="open-demo-info-btn">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>DEMO</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Sub-bar: Site info & Time Range Filters -->
+    <div class="glass-panel sub-bar-panel reveal-item reveal-delay-2">
+      <div class="sub-left">
+        <h2 class="site-title" id="active-site-title">Nexus AI Cloud Platform</h2>
+        <div class="site-domain-badge mono">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+          </svg>
+          <span id="active-site-domain">saas.nexus-ai.dev</span>
+        </div>
+      </div>
+
+      <div class="sub-right">
+        <div class="time-range-group">
+          <button class="range-btn" data-range="today">Hoje</button>
+          <button class="range-btn" data-range="24h">24h</button>
+          <button class="range-btn active" data-range="7d">7 Dias</button>
+          <button class="range-btn" data-range="30d">30 Dias</button>
+          <button class="range-btn" data-range="90d">90 Dias</button>
+          <button class="range-btn" data-range="1y">1 Ano</button>
+        </div>
+
+        <button class="refresh-trigger-btn" id="refresh-metrics-btn" title="Atualizar Dados">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <polyline points="1 20 1 14 7 14"></polyline>
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         SECTION: OVERVIEW (DEFAULT)
+         ========================================================= -->
+    <div id="overview-section" style="display:flex; flex-direction:column; gap:20px;">
+      
+      <!-- Hero 5 Metric Cards -->
+      <div class="metrics-grid reveal-item reveal-delay-2">
+        
+        <!-- 1. Visualizações -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Visualizações de Páginas</span>
+            <span class="metric-delta positive">+14.2%</span>
+          </div>
+          <div class="metric-body">
+            <span class="metric-value" id="metric-views-val">248.930</span>
+            <canvas class="metric-sparkline-canvas" id="sparkline-views"></canvas>
+          </div>
+        </div>
+
+        <!-- 2. Visitantes Únicos -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Visitantes Únicos</span>
+            <span class="metric-delta positive">+8.6%</span>
+          </div>
+          <div class="metric-body">
+            <span class="metric-value" id="metric-visitors-val">68.410</span>
+            <canvas class="metric-sparkline-canvas" id="sparkline-visitors"></canvas>
+          </div>
+        </div>
+
+        <!-- 3. Visitas / Sessões -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Sessões Totais</span>
+            <span class="metric-delta positive">+11.8%</span>
+          </div>
+          <div class="metric-body">
+            <span class="metric-value" id="metric-visits-val">94.220</span>
+            <canvas class="metric-sparkline-canvas" id="sparkline-visits"></canvas>
+          </div>
+        </div>
+
+        <!-- 4. Taxa de Rejeição -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Taxa de Rejeição</span>
+            <span class="metric-delta positive">-2.1%</span>
+          </div>
+          <div class="metric-body">
+            <span class="metric-value" id="metric-bounce-val">31.4%</span>
+            <canvas class="metric-sparkline-canvas" id="sparkline-bounce"></canvas>
+          </div>
+        </div>
+
+        <!-- 5. Duração Média -->
+        <div class="metric-card">
+          <div class="metric-header">
+            <span class="metric-label">Tempo Médio de Visita</span>
+            <span class="metric-delta positive">+18s</span>
+          </div>
+          <div class="metric-body">
+            <span class="metric-value" id="metric-duration-val">3m 48s</span>
+            <canvas class="metric-sparkline-canvas" id="sparkline-duration"></canvas>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Main Time-Series Analytics Chart -->
+      <div class="glass-panel chart-panel reveal-item reveal-delay-3">
+        <div class="chart-header">
+          <div class="chart-title-wrap">
+            <h3 class="chart-title">Desempenho de Tráfego</h3>
+            <span style="font-size:11px; color:var(--text-tertiary);" class="mono">Amostragem em Alta Resolução</span>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-pill views"></span>
+              <span>Visualizações</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-pill visitors"></span>
+              <span>Visitantes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <canvas id="main-analytics-canvas"></canvas>
+          <div class="chart-tooltip mono" id="chart-tooltip"></div>
+        </div>
+      </div>
+
+      <!-- Primary Breakdown: Páginas & Origens -->
+      <div class="breakdown-row-primary reveal-item reveal-delay-4">
+        
+        <!-- Páginas -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <div class="breakdown-tabs">
+              <button class="b-tab-btn pages-tab-btn active" data-subtab="pages">Páginas</button>
+              <button class="b-tab-btn pages-tab-btn" data-subtab="entry">Entrada</button>
+              <button class="b-tab-btn pages-tab-btn" data-subtab="exit">Saída</button>
+            </div>
+            <div class="breakdown-search">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="pages-search-input" placeholder="Filtrar URL...">
+            </div>
+          </div>
+          <div class="breakdown-list" id="pages-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Origens / Referrers -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <div class="breakdown-tabs">
+              <button class="b-tab-btn ref-tab-btn active" data-subtab="referrers">Origens</button>
+              <button class="b-tab-btn ref-tab-btn" data-subtab="utm">Campanhas</button>
+            </div>
+            <div class="breakdown-search">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="ref-search-input" placeholder="Filtrar origem...">
+            </div>
+          </div>
+          <div class="breakdown-list" id="referrers-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Secondary Breakdown: Navegadores, SO, Dispositivos & Países -->
+      <div class="breakdown-row-secondary reveal-item reveal-delay-5">
+        
+        <!-- Navegadores & SO -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <span style="font-size:13px; font-weight:700; color:#fff;">Navegadores & Plataformas</span>
+          </div>
+          <div class="breakdown-list" id="browsers-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Dispositivos & SO -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <span style="font-size:13px; font-weight:700; color:#fff;">Sistemas Operacionais</span>
+          </div>
+          <div class="breakdown-list" id="os-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Países com Bandeiras -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <span style="font-size:13px; font-weight:700; color:#fff;">Geolocalização Global</span>
+          </div>
+          <div class="breakdown-list" id="countries-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Custom Events & Dispositivos -->
+      <div class="breakdown-row-primary reveal-item">
+        
+        <!-- Custom Events -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <span style="font-size:13px; font-weight:700; color:#fff;">Eventos Personalizados & Conversões</span>
+            <span style="font-size:10px; color:var(--accent-purple);" class="mono">AUTOMATIC TRACKING</span>
+          </div>
+          <div class="breakdown-list" id="events-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+        <!-- Dispositivos & Form Factors -->
+        <div class="glass-panel breakdown-card">
+          <div class="breakdown-header">
+            <span style="font-size:13px; font-weight:700; color:#fff;">Distribuição de Dispositivos</span>
+          </div>
+          <div class="breakdown-list" id="devices-breakdown-list">
+            <!-- Injetado dinamicamente -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Realtime Activity Stream -->
+      <div class="glass-panel realtime-feed-panel reveal-item">
+        <div class="realtime-feed-header">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span class="demo-pulse-dot"></span>
+            <h3 style="font-size:15px; font-weight:700; color:#fff;">Stream de Acessos em Tempo Real</h3>
+          </div>
+          <span style="font-size:11px; color:var(--text-tertiary);" class="mono">LIVE TELEMETRY STREAM</span>
+        </div>
+        <div class="feed-stream-container" id="realtime-stream-feed">
+          <!-- Injetado dinamicamente a cada 3s -->
+        </div>
+      </div>
+
+    </div>
+
+    <!-- =========================================================
+         SECTION: REALTIME DEDICATED VIEW
+         ========================================================= -->
+    <div id="realtime-section" style="display:none; flex-direction:column; gap:20px;">
+      <div class="glass-panel" style="padding:28px; text-align:center;">
+        <span class="demo-pulse-dot" style="width:12px; height:12px; margin-bottom:12px; display:inline-block;"></span>
+        <h2 style="font-family:var(--font-display); font-size:32px; font-weight:800; color:#fff; margin-bottom:6px;">Radar Global em Tempo Real</h2>
+        <p style="color:var(--text-secondary); font-size:14px; max-width:540px; margin:0 auto 24px;">Monitoramento de conexões simultâneas, tráfego geográfico ativo e distribuição por nós de borda sem retenção de cookies invasivos.</p>
+        <div style="display:flex; justify-content:center; gap:24px; flex-wrap:wrap;">
+          <div class="glass-panel" style="padding:16px 24px; min-width:180px;">
+            <div style="color:var(--text-tertiary); font-size:11px;">Visitantes Ativos</div>
+            <div style="font-size:28px; font-weight:800; color:#34d399;" class="mono" id="realtime-active-counter">142</div>
+          </div>
+          <div class="glass-panel" style="padding:16px 24px; min-width:180px;">
+            <div style="color:var(--text-tertiary); font-size:11px;">Países Conectados</div>
+            <div style="font-size:28px; font-weight:800; color:#38bdf8;" class="mono">28</div>
+          </div>
+          <div class="glass-panel" style="padding:16px 24px; min-width:180px;">
+            <div style="color:var(--text-tertiary); font-size:11px;">Páginas Ativas</div>
+            <div style="font-size:28px; font-weight:800; color:#a78bfa;" class="mono">14</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         SECTION: WEBSITES DIRECTORY VIEW
+         ========================================================= -->
+    <div id="websites-section" style="display:none; flex-direction:column; gap:20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 style="font-family:var(--font-display); font-size:20px; font-weight:700; color:#fff;">Websites Rastreados</h2>
+        <span style="font-size:12px; color:var(--text-tertiary);" class="mono">3 INSTÂNCIAS DE DEMONSTRAÇÃO</span>
+      </div>
+      <div id="websites-directory-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:16px;">
+        <!-- Injetado dinamicamente -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       4. MODAL DE INFORMAÇÕES DA DEMO (ZERO EXPOSURE)
+       ========================================================= -->
+  <div class="modal-overlay" id="demo-info-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="close-demo-info-btn">✕</button>
+      <div style="display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:99px; background:rgba(167,139,250,0.15); border:1px solid rgba(167,139,250,0.3); color:#ddd6fe; font-size:11px; font-weight:600; margin-bottom:16px;">
+        <span>PORTFOLIO DEMO SPECIFICATION</span>
+      </div>
+      <h3 style="font-family:var(--font-display); font-size:22px; font-weight:700; color:#fff; margin-bottom:10px;">Umami Analytics // Portfolio Showcase</h3>
+      <p style="color:var(--text-secondary); font-size:13px; line-height:1.6; margin-bottom:18px;">
+        Esta demonstração de software foi arquitetada especificamente para apresentação profissional de alto impacto técnico em portfólio.
+      </p>
+      <div style="display:flex; flex-direction:column; gap:10px; font-size:12px; color:var(--text-secondary); line-height:1.5;">
+        <div style="display:flex; gap:10px;">
+          <span style="color:#a78bfa; font-weight:700;">🛡️ Zero Exposição Privada:</span>
+          <span>Todas as métricas, domínios e eventos foram substituídos por geradores estocásticos de alta fidelidade sem qualquer exposição de dados pessoais.</span>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <span style="color:#38bdf8; font-weight:700;">🎨 Design System Proprietário:</span>
+          <span>Interface inspirada no VisionOS / Liquid Glass com aceleração por 34 Shaders WebGL desenvolvidos em GPU pura.</span>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <span style="color:#34d399; font-weight:700;">⚡ Autocontido & Edge-Ready:</span>
+          <span>Deploy instantâneo na Vercel com zero atrito de infraestrutura ou dependência de banco de dados externo.</span>
+        </div>
+      </div>
+      <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:11px; color:var(--text-tertiary);">Arquiteto: <strong>Mateus Celestino</strong></span>
+        <a href="https://github.com/MateusCelestinoProX/umami-demo" target="_blank" style="color:var(--accent-purple); font-size:12px; font-weight:600; text-decoration:none;">GitHub Repo →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="js/webgl-backgrounds.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

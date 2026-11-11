@@ -1,0 +1,62 @@
+{
+  "js/app.js": {
+    "mtime": 1794361260.8649766,
+    "seen": 1794361308.6699688,
+    "ast_hash": "fc6b2ba6fac321a38c020d616f60d2a0",
+    "semantic_hash": ""
+  },
+  "js/ogl.js": {
+    "mtime": 1794361115.7796447,
+    "seen": 1794361308.669972,
+    "ast_hash": "2053a58c70590e81b8c60af3390458db",
+    "semantic_hash": ""
+  },
+  "js/webgl-backgrounds.js": {
+    "mtime": 1794361115.7820823,
+    "seen": 1794361308.669974,
+    "ast_hash": "cb630c4c159c18decfc9c7e55a9160c2",
+    "semantic_hash": ""
+  },
+  "vercel.json": {
+    "mtime": 1794361282.698749,
+    "seen": 1794361308.669974,
+    "ast_hash": "1d7be4cce5790ef75cd04c2a7d281534",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1794361302.5969458,
+    "seen": 1794361308.669975,
+    "ast_hash": "a6521409fcbc491ebb3382960a86b4a8",
+    "semantic_hash": ""
+  },
+  "index.html": {
+    "mtime": 1794361246.9992456,
+    "seen": 1794361308.669976,
+    "ast_hash": "4e4e10e6b0fbfc6dd00064c9a6487d67",
+    "semantic_hash": ""
+  },
+  "images/apple-touch-icon.png": {
+    "mtime": 1794361124.2558281,
+    "seen": 1794361308.6699772,
+    "ast_hash": "e37c5648772908075d8342e678640d6e",
+    "semantic_hash": ""
+  },
+  "images/favicon-16x16.png": {
+    "mtime": 1794361124.2525213,
+    "seen": 1794361308.6699781,
+    "ast_hash": "e580819e046348b45939a99cb99f3650",
+    "semantic_hash": ""
+  },
+  "images/favicon-32x32.png": {
+    "mtime": 1794361124.2528589,
+    "seen": 1794361308.6699789,
+    "ast_hash": "21d91cd2403289543ff1588973a782d9",
+    "semantic_hash": ""
+  },
+  "images/safari-pinned-tab.svg": {
+    "mtime": 1794361124.2576315,
+    "seen": 1794361308.6699789,
+    "ast_hash": "cddd4dd8e787ccc9975cad266f85b44d",
+    "semantic_hash": ""
+  }
+}
